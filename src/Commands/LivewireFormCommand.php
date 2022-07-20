@@ -1,14 +1,14 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace timolake\livewireForms\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LivewireFormCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'livewireForm';
 
-    public $description = 'My command';
+    public $description = '';
 
     public function handle(): int
     {
