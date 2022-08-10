@@ -21,6 +21,6 @@ class LivewireFormServiceProvider extends PackageServiceProvider
             ->hasViews()
 //            ->hasMigration('create_skeleton_table')
 //            ->hasCommand(LivewireFormCommand::class)
-        ;
+;
     }
 }

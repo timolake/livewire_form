@@ -8,20 +8,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-abstract class  LivewireForm extends Component
+abstract class LivewireForm extends Component
 {
     public ?string $modelClass = null;
+
     public ?Model $model = null;
+
     public bool $showDeleteModal = false;
+
     public bool $showRestoreModal = false;
-    public string $idField = "id";
+
+    public string $idField = 'id';
+
     //----------------------------------------------------
     // url params
     //----------------------------------------------------
     public $search;
+
     public $sortField;
+
     public $sortDir;
+
     public $paginationPage;
+
     public $redirectMessage;
 
     abstract public function model(): string;
@@ -34,13 +43,12 @@ abstract class  LivewireForm extends Component
 
     public function mount(Request $request, $id = null)
     {
-
         $this->idField = ((new ($this->model()))->getKeyName());
         $this->modelClass = $this->model();
 
         $this->model = $id == null
             ? new $this->modelClass
-            :  $this->modelClass::find($id);
+            : $this->modelClass::find($id);
 
         $this->rules = $this->rules();
         $this->search = $request->search ?? null;
@@ -49,8 +57,6 @@ abstract class  LivewireForm extends Component
         $this->paginationPage = $request->paginationPage ?? null;
         $this->showInvoiced = $request->showInvoiced ?? false;
         $this->showItemsToApprove = $request->showItemsToApprove ?? false;
-
-
     }
 
     //----------------------------------------------------
@@ -70,7 +76,7 @@ abstract class  LivewireForm extends Component
 
     public function delete()
     {
-        if (!$this->hasId()) {
+        if (! $this->hasId()) {
             throw new \Exception("cannot delete without id for model $this->modelClass ");
         }
 
@@ -82,7 +88,7 @@ abstract class  LivewireForm extends Component
 
     public function restore()
     {
-        if (!$this->hasId()) {
+        if (! $this->hasId()) {
             throw new \Exception("cannot restore without id for model $this->modelClass ");
         }
 
@@ -130,7 +136,7 @@ abstract class  LivewireForm extends Component
 
     protected function redirectToIndex()
     {
-        return redirect(self::addParamsToUrl($this->getRedirectRoute(), $this->getRedirectParams()))->with("status",$this->redirectMessage);
+        return redirect(self::addParamsToUrl($this->getRedirectRoute(), $this->getRedirectParams()))->with('status', $this->redirectMessage);
     }
 
     private static function addParamsToUrl(string $url, array $params): string
@@ -156,6 +162,7 @@ abstract class  LivewireForm extends Component
     public function beforeSave()
     {
     }
+
     public function afterSave()
     {
     }
@@ -174,7 +181,7 @@ abstract class  LivewireForm extends Component
         return $this->model->$idfield;
     }
 
-    public  function beforeDelete()
+    public function beforeDelete()
     {
     }
 }
