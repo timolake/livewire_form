@@ -43,12 +43,15 @@ abstract class LivewireForm extends Component
 
     public function mount(Request $request, $id = null)
     {
-        $this->idField = ((new ($this->model()))->getKeyName());
         $this->modelClass = $this->model();
+        $tempModel = (new ($this->modelClass));
+        $this->idField = $tempModel->getKeyName();
 
+        $isSoftDeleting = in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($tempModel)) && ! $tempModel->forceDeleting;;
         $this->model = $id == null
             ? new $this->modelClass
-            : $this->modelClass::withTrashed()->findOrFail($id);
+            : ($isSoftDeleting ? $this->modelClass::withTrashed()->findOrFail($id) : $this->modelClass::findOrFail($id) );
+
         $this->rules = $this->rules();
         $this->search = $request->search ?? null;
         $this->sortField = $request->sortField ?? null;
