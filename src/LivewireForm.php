@@ -48,8 +48,7 @@ abstract class LivewireForm extends Component
 
         $this->model = $id == null
             ? new $this->modelClass
-            : $this->modelClass::find($id);
-
+            : $this->modelClass::withTrashed()->findOrFail($id);
         $this->rules = $this->rules();
         $this->search = $request->search ?? null;
         $this->sortField = $request->sortField ?? null;
