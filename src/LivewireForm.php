@@ -50,7 +50,7 @@ abstract class LivewireForm extends Component
         $isSoftDeleting = in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($tempModel));
         $this->model = $id == null
             ? new $this->modelClass
-            : ($isSoftDeleting ? $this->modelClass::withTrashed()->findOrFail($id) : $this->modelClass::findOrFail($id) );
+            : ($isSoftDeleting ? $this->modelClass::withTrashed()->findOrFail($id) : $this->modelClass::findOrFail($id));
 
         $this->rules = $this->rules();
         $this->search = $request->search ?? null;
