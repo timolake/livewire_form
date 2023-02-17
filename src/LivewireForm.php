@@ -47,7 +47,7 @@ abstract class LivewireForm extends Component
         $tempModel = (new ($this->modelClass));
         $this->idField = $tempModel->getKeyName();
 
-        $isSoftDeleting = in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($tempModel)) && ! $tempModel->forceDeleting;;
+        $isSoftDeleting = in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($tempModel));
         $this->model = $id == null
             ? new $this->modelClass
             : ($isSoftDeleting ? $this->modelClass::withTrashed()->findOrFail($id) : $this->modelClass::findOrFail($id) );
