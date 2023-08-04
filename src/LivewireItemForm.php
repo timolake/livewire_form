@@ -50,10 +50,7 @@ abstract class LivewireItemForm extends LivewireForm
     //----------------------------------------------------
     public function saveItem()
     {
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         $this->validate($this->itemRules(), [], $this->selectedItem);
         //create or update item in form attribute
         if ($this->selectedItemKey === null) {
@@ -191,9 +188,6 @@ abstract class LivewireItemForm extends LivewireForm
     public function closeEditModal()
     {
         $this->showEditItemModal = false;
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     }
 }
