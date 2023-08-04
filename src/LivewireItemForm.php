@@ -117,6 +117,7 @@ abstract class LivewireItemForm extends LivewireForm
                 $itemModel->update($item);
                 $arrItemIds[] = $item['id'];
             } else {
+                $item[$this->itemidField] = $this->model->id;
                 $newItemModel = $this->itemClass::create($item);
                 $arrItemIds[] = $newItemModel->id;
             }
