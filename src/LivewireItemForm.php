@@ -13,17 +13,20 @@ use Illuminate\Support\Arr;
 abstract class LivewireItemForm extends LivewireForm
 {
     public string $itemClass;
+
     public string $itemidField;
+
     public array $items;
+
     public null|array|Model $selectedItem = null;
+
     public ?int $selectedItemKey = null;
 
     public bool $showEditItemModal = false;
 
     abstract public function itemRelationshipName(): string;
+
     abstract public function itemRules(): array;
-
-
 
     public function mount(Request $request, $id = null)
     {
@@ -47,8 +50,7 @@ abstract class LivewireItemForm extends LivewireForm
     //----------------------------------------------------
     public function saveItem()
     {
-
-        $this->validate($this->itemRules(),[],$this->selectedItem);
+        $this->validate($this->itemRules(), [], $this->selectedItem);
         //create or update item in form attribute
         if ($this->selectedItemKey === null) {
             $this->items[] = $this->selectedItem;
@@ -57,7 +59,6 @@ abstract class LivewireItemForm extends LivewireForm
         }
         $this->initSelectedItem();
         $this->closeEditModal();
-
     }
 
     public function removeItem(int $selectedKey)
@@ -71,8 +72,8 @@ abstract class LivewireItemForm extends LivewireForm
         $this->selectedItemKey = null;
         $this->initSelectedItem();
         $this->openEditModal();
-
     }
+
     public function setSelectedItem(int $key)
     {
         $this->selectedItemKey = $key;
@@ -94,19 +95,20 @@ abstract class LivewireItemForm extends LivewireForm
     {
         $itemRelationship = $this->getRelationship($this->itemRelationshipName());
         [$parentTable, $parentId, $subTable, $subId] = $this->getRelationshipKeys($itemRelationship);
+
         return $subId;
     }
 
     public function getItemClass(): string
     {
         $itemRelationship = $this->getRelationship($this->itemRelationshipName());
+
         return $itemRelationship->getRelated()::class;
     }
 
     //----------------------------------------------------
     // relationships
     //----------------------------------------------------
-
 
     public function saveRelations(): void
     {
@@ -131,12 +133,14 @@ abstract class LivewireItemForm extends LivewireForm
     //----------------------------------------------------
     // helpers
     //----------------------------------------------------
-    public function getRelationship(string $name, ?string $parent = null): Relation
+    public function getRelationship(string $name, string $parent = null): Relation
     {
         if (isset($parent)) {
             $parentRelation = app($this->model())->$parent();
+
             return $parentRelation->getRelated()->$name();
         }
+
         return app($this->model())->$name();
     }
 
@@ -150,21 +154,21 @@ abstract class LivewireItemForm extends LivewireForm
         $fullForeignKey = $relationship->getQualifiedForeignKeyName();
 
         if ($relationship instanceof HasOne) {
-            [$parentTable, $parentId] = explode(".", $fullForeignKey);
+            [$parentTable, $parentId] = explode('.', $fullForeignKey);
 
             $fullOwnerKey = $relationship->getQualifiedForeignKeyName();
-            [$subTable, $subId] = explode(".", $fullOwnerKey);
+            [$subTable, $subId] = explode('.', $fullOwnerKey);
         }
 
         if ($relationship instanceof BelongsTo) {
-            [$parentTable, $parentId] = explode(".", $fullForeignKey);
+            [$parentTable, $parentId] = explode('.', $fullForeignKey);
 
             $fullOwnerKey = $relationship->getQualifiedOwnerKeyName();
-            [$subTable, $subId] = explode(".", $fullOwnerKey);
+            [$subTable, $subId] = explode('.', $fullOwnerKey);
         }
 
         if ($relationship instanceof HasMany) {
-            [$subTable, $subId] = explode(".", $fullForeignKey);
+            [$subTable, $subId] = explode('.', $fullForeignKey);
 
             $parentId = $relationship->getLocalKeyName();
         }
@@ -177,12 +181,11 @@ abstract class LivewireItemForm extends LivewireForm
     //----------------------------------------------------
     public function openEditModal()
     {
-        $this->showEditItemModal= true;
+        $this->showEditItemModal = true;
     }
 
     public function closeEditModal()
     {
-        $this->showEditItemModal= false;
-
+        $this->showEditItemModal = false;
     }
 }
