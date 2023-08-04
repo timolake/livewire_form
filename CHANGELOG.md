@@ -2,8 +2,10 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v1.2.1 - 2023-08-03
+* ItemForm: bugfix create
 ## v1.2 - 2023-08-02
-* add LiverwireItemForm (form with sublist)
+* add ItemForm (form with sublist)
 ## v1.1 - 2023-05-29
 * add laravel 10 support
 ## v1.0.4 - 2023-02-17
