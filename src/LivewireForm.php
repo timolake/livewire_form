@@ -76,7 +76,7 @@ abstract class LivewireForm extends Component
 
     public function delete()
     {
-        if (!$this->hasId()) {
+        if (! $this->hasId()) {
             throw new \Exception("cannot delete without id for model $this->modelClass ");
         }
 
@@ -88,7 +88,7 @@ abstract class LivewireForm extends Component
 
     public function restore()
     {
-        if (!$this->hasId()) {
+        if (! $this->hasId()) {
             throw new \Exception("cannot restore without id for model $this->modelClass ");
         }
 
@@ -146,7 +146,7 @@ abstract class LivewireForm extends Component
         }
 
         foreach ($params as $key => $value) {
-            $url .= !Str::contains($url, '?')
+            $url .= ! Str::contains($url, '?')
                 ? '?'
                 : '&';
 
