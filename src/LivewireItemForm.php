@@ -27,6 +27,7 @@ abstract class LivewireItemForm extends LivewireForm
     abstract public function itemRelationshipName(): string;
 
     abstract public function itemRules(): array;
+    abstract public function itemValidationAttributes(): array;
 
     public function mount(Request $request, $id = null)
     {
@@ -51,7 +52,7 @@ abstract class LivewireItemForm extends LivewireForm
     public function saveItem()
     {
 
-        $this->validate($this->itemRules(), [], $this->selectedItem);
+        $this->validate($this->itemRules(),[], $this->itemValidationAttributes(), $this->selectedItem);
         //create or update item in form attribute
         if ($this->selectedItemKey === null) {
             $this->items[] = $this->selectedItem;

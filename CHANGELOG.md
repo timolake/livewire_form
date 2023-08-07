@@ -2,6 +2,8 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v1.3 - 2023-08-07
+* ItemForm: add validation attributes
 ## v1.2.2 - 2023-08-03
 * ItemForm: fix merge
 ## v1.2.1 - 2023-08-03
