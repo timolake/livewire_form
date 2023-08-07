@@ -53,7 +53,7 @@ abstract class LivewireItemForm extends LivewireForm
     public function saveItem()
     {
 
-        $this->validate($this->itemRules(), [], $this->itemValidationAttributes(), $this->selectedItem);
+        $this->validate($this->itemRules(), [], $this->itemValidationAttributes());
         //create or update item in form attribute
         if ($this->selectedItemKey === null) {
             $this->items[] = $this->selectedItem;
