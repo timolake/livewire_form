@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use timolake\livewireForms\Traits\ConvertEmptyStringsToNull;
 
 abstract class LivewireForm extends Component
 {
+
+    use ConvertEmptyStringsToNull;
     public ?string $modelClass = null;
 
     public ?Model $model = null;
