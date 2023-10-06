@@ -36,6 +36,12 @@ abstract class LivewireForm extends Component
 
     public $redirectMessage;
 
+    public $sessionId;
+
+    //----------------------------------------------------
+    // functions
+    //----------------------------------------------------
+
     abstract public function model(): string;
 
     abstract public function rules(): array;
@@ -60,6 +66,7 @@ abstract class LivewireForm extends Component
         $this->sortField = $request->sortField ?? null;
         $this->sortDir = $request->sortDir ?? null;
         $this->paginationPage = $request->paginationPage ?? null;
+        $this->sessionId = $request->sessionId ?? null;
     }
 
     //----------------------------------------------------
@@ -132,6 +139,10 @@ abstract class LivewireForm extends Component
 
         if ($this->paginationPage) {
             $params['paginationPage'] = $this->paginationPage;
+        }
+
+        if ($this->sessionId) {
+            $params['sessionId'] = $this->sessionId;
         }
 
         return $params;
