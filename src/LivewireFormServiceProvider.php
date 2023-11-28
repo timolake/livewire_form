@@ -18,9 +18,8 @@ class LivewireFormServiceProvider extends PackageServiceProvider
         $package
             ->name('livewireForm')
             ->hasConfigFile()
-            ->hasViews()
-//            ->hasMigration('create_skeleton_table')
-//            ->hasCommand(LivewireFormCommand::class)
-;
+            ->hasViews();
+        //            ->hasMigration('create_skeleton_table')
+        //            ->hasCommand(LivewireFormCommand::class)
     }
 }

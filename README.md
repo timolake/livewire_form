@@ -14,8 +14,45 @@ You can install the package via composer:
 
 ```bash
 composer require timolake/livewire-forms
+
 ```
 
+## How to use
+
+1. create class in \App\Http\Livewire\Forms and extend form timolake\LivewireForm or timolake\LivewireItemForm
+1. implement abstact classes \
+populate rules() with all attributes wich need to be edited \
+use model.attribute notation
+1. create view
+## validation
+
+for model validation always use **model.attribute**
+```php
+    public function rules(): array
+    {
+        return [
+            'model.name' => 'required|min:2|max:255',
+        ];
+    }
+```
+for item validation, use **model.items** and **selectedItem.attribute**
+
+ ```php
+    public function rules(): array
+    {
+        return [
+            'items' => 'required|min:1',
+        ];
+    }
+
+    public function itemRules(): array
+    {
+        return [
+            'selectedItem.foreign_key' => 'required|numeric',
+            'selectedItem.name' => 'required|min:2|max:255',
+        ];    
+    }
+ ```
 
 ## Changelog
 
