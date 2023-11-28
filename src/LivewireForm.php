@@ -198,4 +198,16 @@ abstract class LivewireForm extends Component
     public function beforeDelete()
     {
     }
+
+    //----------------------------------------------------
+    // modals
+    //---------------------------------------------------
+    public function closeDeleteModal()
+    {
+        $this->showDeleteModal = false;
+    }
+    public function openDeleteModal()
+    {
+        $this->showDeleteModal = true;
+    }
 }
