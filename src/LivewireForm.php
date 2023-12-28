@@ -210,4 +210,13 @@ abstract class LivewireForm extends Component
     {
         $this->showDeleteModal = true;
     }
+
+    public function closeRestoreModal()
+    {
+        $this->showRestoreModal = false;
+    }
+    public function openRestoreModal()
+    {
+        $this->showRestoreModal = true;
+    }
 }
