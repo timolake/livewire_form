@@ -2,6 +2,8 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v1.7 - 2023-12-28
+* add restore modal functions
 ## v1.6 - 2023-11-28
 * add delete modal functions
 ## v1.5 - 2023-10-06
