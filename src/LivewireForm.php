@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use timolake\livewireForms\Traits\ConvertEmptyStringsToNull;
+use Illuminate\Support\Facades\DB;
 
 abstract class LivewireForm extends Component
 {
 
     use ConvertEmptyStringsToNull;
+
     public ?string $modelClass = null;
 
     public ?Model $model = null;
@@ -76,17 +78,19 @@ abstract class LivewireForm extends Component
     public function save()
     {
         $this->validate();
+        DB::transaction(function () {
+            $this->beforeSave();
+            $this->model->save();
+            $this->saveRelations();
+            $this->afterSave();
+        });
 
-        $this->beforeSave();
-        $this->model->save();
-        $this->saveRelations();
-        $this->afterSave();
         $this->redirectToIndex();
     }
 
     public function delete()
     {
-        if (! $this->hasId()) {
+        if (!$this->hasId()) {
             throw new \Exception("cannot delete without id for model $this->modelClass ");
         }
 
@@ -98,7 +102,7 @@ abstract class LivewireForm extends Component
 
     public function restore()
     {
-        if (! $this->hasId()) {
+        if (!$this->hasId()) {
             throw new \Exception("cannot restore without id for model $this->modelClass ");
         }
 
@@ -160,7 +164,7 @@ abstract class LivewireForm extends Component
         }
 
         foreach ($params as $key => $value) {
-            $url .= ! Str::contains($url, '?')
+            $url .= !Str::contains($url, '?')
                 ? '?'
                 : '&';
 
@@ -206,6 +210,7 @@ abstract class LivewireForm extends Component
     {
         $this->showDeleteModal = false;
     }
+
     public function openDeleteModal()
     {
         $this->showDeleteModal = true;
@@ -215,6 +220,7 @@ abstract class LivewireForm extends Component
     {
         $this->showRestoreModal = false;
     }
+
     public function openRestoreModal()
     {
         $this->showRestoreModal = true;
