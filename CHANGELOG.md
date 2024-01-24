@@ -2,6 +2,8 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v1.8 - 2024-01-24
+* add database transaction
 ## v1.7 - 2023-12-28
 * add restore modal functions
 ## v1.6 - 2023-11-28
