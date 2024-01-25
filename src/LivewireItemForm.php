@@ -116,10 +116,7 @@ abstract class LivewireItemForm extends LivewireForm
 
     public function saveRelations(): void
     {
-        ray("saveRelations");
-
         $itemRelationship = $this->getRelationship($this->itemRelationshipName());
-        ray($itemRelationship);
 
         if($itemRelationship instanceof BelongsToMany){
             //----------------------------------------------------
@@ -209,7 +206,6 @@ abstract class LivewireItemForm extends LivewireForm
 //            ray($relationship->getQualifiedRelatedKeyName());
 
             $fullOwnerKey = $relationship->getQualifiedForeignPivotKeyName();
-//            ray("fullOwnerKey",$fullOwnerKey);
             [$subTable, $subId] = explode('.', $fullOwnerKey);
         }
 
