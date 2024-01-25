@@ -4,6 +4,7 @@ namespace timolake\livewireForms;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -115,22 +116,43 @@ abstract class LivewireItemForm extends LivewireForm
 
     public function saveRelations(): void
     {
-        $arrItemIds = [];
-        foreach ($this->items as $item) {
-            if (isset($item['id'])) {
-                $itemModel = $this->itemClass::findOrFail($item['id']);
-                $itemModel->update($item);
-                $arrItemIds[] = $item['id'];
-            } else {
-                $item[$this->itemidField] = $this->model->id;
-                $newItemModel = $this->itemClass::create($item);
-                $arrItemIds[] = $newItemModel->id;
+        ray("saveRelations");
+
+        $itemRelationship = $this->getRelationship($this->itemRelationshipName());
+        ray($itemRelationship);
+
+        if($itemRelationship instanceof BelongsToMany){
+            //----------------------------------------------------
+            // sync belongsToMany relation
+            //----------------------------------------------------
+            $itemRelationshipName = $this->itemRelationshipName();
+            $itemsId = Arr::pluck($this->items, "id");
+            $this->model->$itemRelationshipName()->sync($itemsId);
+
+        }else{
+
+            //----------------------------------------------------
+            // update or create relation
+            //----------------------------------------------------
+            $arrItemIds = [];
+            foreach ($this->items as $item) {
+                if (isset($item['id'])) {
+                    $itemModel = $this->itemClass::findOrFail($item['id']);
+                    $itemModel->update($item);
+                    $arrItemIds[] = $item['id'];
+                } else {
+                    $item[$this->itemidField] = $this->model->id;
+                    $newItemModel = $this->itemClass::create($item);
+                    $arrItemIds[] = $newItemModel->id;
+                }
             }
+
+            $this->itemClass::where($this->itemidField, $this->model->id)
+                ->whereNotIn('id', $arrItemIds)
+                ->delete();
         }
 
-        $this->itemClass::where($this->itemidField, $this->model->id)
-            ->whereNotIn('id', $arrItemIds)
-            ->delete();
+
     }
 
     //----------------------------------------------------
@@ -154,7 +176,9 @@ abstract class LivewireItemForm extends LivewireForm
         $subTable = null;
         $subId = null;
 
-        $fullForeignKey = $relationship->getQualifiedForeignKeyName();
+        $fullForeignKey = $relationship instanceof BelongsToMany
+            ? $relationship->getQualifiedForeignPivotKeyName()
+            : $relationship->getQualifiedForeignKeyName();
 
         if ($relationship instanceof HasOne) {
             [$parentTable, $parentId] = explode('.', $fullForeignKey);
@@ -175,6 +199,21 @@ abstract class LivewireItemForm extends LivewireForm
 
             $parentId = $relationship->getLocalKeyName();
         }
+
+        if ($relationship instanceof BelongsToMany) {
+            [$parentTable, $parentId] = explode('.', $fullForeignKey);
+//            ray("$parentTable",$parentId);
+//            ray($relationship->getQualifiedForeignPivotKeyName());
+//            ray($relationship->getQualifiedRelatedPivotKeyName());
+//            ray($relationship->getQualifiedParentKeyName());
+//            ray($relationship->getQualifiedRelatedKeyName());
+
+            $fullOwnerKey = $relationship->getQualifiedForeignPivotKeyName();
+//            ray("fullOwnerKey",$fullOwnerKey);
+            [$subTable, $subId] = explode('.', $fullOwnerKey);
+        }
+
+
 
         return [$parentTable, $parentId, $subTable, $subId];
     }
