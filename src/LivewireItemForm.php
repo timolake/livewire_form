@@ -123,7 +123,8 @@ abstract class LivewireItemForm extends LivewireForm
             // sync belongsToMany relation
             //----------------------------------------------------
             $itemRelationshipName = $this->itemRelationshipName();
-            $itemsId = Arr::pluck($this->items, "id");
+            ray($this->items, $this->itemidField);
+            $itemsId = Arr::pluck($this->items, $this->itemidField);
             $this->model->$itemRelationshipName()->sync($itemsId);
 
         }else{
@@ -205,7 +206,7 @@ abstract class LivewireItemForm extends LivewireForm
 //            ray($relationship->getQualifiedParentKeyName());
 //            ray($relationship->getQualifiedRelatedKeyName());
 
-            $fullOwnerKey = $relationship->getQualifiedForeignPivotKeyName();
+            $fullOwnerKey = $relationship->getQualifiedRelatedPivotKeyName();
             [$subTable, $subId] = explode('.', $fullOwnerKey);
         }
 
