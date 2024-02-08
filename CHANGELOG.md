@@ -2,8 +2,9 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
-## v1.9.1 - 2024-02-08
+## v1.9.3 - 2024-02-08
 * form: sequence AfterSave and SaveRelations
+* itemform: belongs to many id
 ## v1.9 - 2024-01-24
 * itemForm: add support for BelongsToMany
 ## v1.8 - 2024-01-24
