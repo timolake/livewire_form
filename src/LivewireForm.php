@@ -81,8 +81,8 @@ abstract class LivewireForm extends Component
         DB::transaction(function () {
             $this->beforeSave();
             $this->model->save();
-            $this->saveRelations();
             $this->afterSave();
+            $this->saveRelations();
         });
 
         $this->redirectToIndex();
