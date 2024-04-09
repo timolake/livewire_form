@@ -129,13 +129,11 @@ abstract class LivewireItemForm extends LivewireForm
         $itemRelationship = $this->getRelationship($this->itemRelationshipName());
 
         if($itemRelationship instanceof BelongsToMany){
-            $relatedItemClass =$this->getItemClass();
-            $relatedClassIdField = (new $relatedItemClass)->getKeyName();
             //----------------------------------------------------
             // sync belongsToMany relation
             //----------------------------------------------------
             $itemRelationshipName = $this->itemRelationshipName();
-            $itemsId = Arr::pluck($this->items, $relatedClassIdField);
+            $itemsId = Arr::pluck($this->items, "id");
             $this->model->$itemRelationshipName()->sync($itemsId);
 
         }else{
