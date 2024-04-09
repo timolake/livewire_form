@@ -215,7 +215,7 @@ abstract class LivewireItemForm extends LivewireForm
 //            ray($relationship->getQualifiedParentKeyName());
 //            ray($relationship->getQualifiedRelatedKeyName());
 
-            $fullOwnerKey = $relationship->getQualifiedRelatedPivotKeyName();
+            $fullOwnerKey = $relationship->getQualifiedForeignPivotKeyName();
             [$subTable, $subId] = explode('.', $fullOwnerKey);
         }
 
