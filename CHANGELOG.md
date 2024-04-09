@@ -2,7 +2,11 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
-## v1.9.3 - 2024-02-08
+## v1.10 - 2024-04-08
+* itemform: get parent id from relationship
+* itemform: belongsToMany get id from from foreign pivot
+* itemform: belongs to many uses id of intermediate table
+  * ## v1.9.3 - 2024-02-08
 * form: sequence AfterSave and SaveRelations
 * itemform: belongs to many id
 ## v1.9 - 2024-01-24
