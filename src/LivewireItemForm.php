@@ -15,6 +15,7 @@ abstract class LivewireItemForm extends LivewireForm
 {
     public string $itemClass;
 
+    public string $parentIdField;
     public string $itemidField;
 
     public array $items;
@@ -36,6 +37,7 @@ abstract class LivewireItemForm extends LivewireForm
         parent::mount($request, $id);
         $this->itemClass = $this->getItemClass();
         $this->itemidField = $this->getItemIdField();
+        $this->parentIdField = $this->getParentIdField();
         $this->items = $this->initItems();
         $this->initSelectedItem();
     }
@@ -91,7 +93,7 @@ abstract class LivewireItemForm extends LivewireForm
             $this->selectedItem = $this->items[$this->selectedItemKey];
         } else {
             $this->selectedItem = (new $this->itemClass)->toArray();
-            $this->selectedItem[$this->itemidField] = $this->model->id;
+            $this->selectedItem[$this->itemidField] = $this->model[$this->parentIdField];
         }
     }
 
@@ -102,6 +104,14 @@ abstract class LivewireItemForm extends LivewireForm
 
         return $subId;
     }
+    public function getParentIdField(): string
+    {
+        $itemRelationship = $this->getRelationship($this->itemRelationshipName());
+        [$parentTable, $parentId, $subTable, $subId] = $this->getRelationshipKeys($itemRelationship);
+
+        return $parentId;
+    }
+
 
     public function getItemClass(): string
     {
@@ -140,14 +150,14 @@ abstract class LivewireItemForm extends LivewireForm
                     $itemModel->update($item);
                     $arrItemIds[] = $item['id'];
                 } else {
-                    $item[$this->itemidField] = $this->model->id;
+                    $item[$this->itemidField] = $this->model[$this->parentIdField];
                     $newItemModel = $this->itemClass::create($item);
                     $arrItemIds[] = $newItemModel->id;
                 }
             }
 
-            $this->itemClass::where($this->itemidField, $this->model->id)
-                ->whereNotIn('id', $arrItemIds)
+            $this->itemClass::where($this->itemidField, $this->model[$this->parentIdField])
+                ->whereNotIn((new $this->itemClass)->getKeyName(), $arrItemIds)
                 ->delete();
         }
 
