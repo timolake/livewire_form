@@ -2,6 +2,8 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v1.11 - 2024-04-11
+* itemform: get id field for item from model
 ## v1.10 - 2024-04-08
 * itemform: get parent id from relationship
 * itemform: belongsToMany get id from from foreign pivot
