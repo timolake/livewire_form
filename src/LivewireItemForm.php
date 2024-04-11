@@ -127,6 +127,7 @@ abstract class LivewireItemForm extends LivewireForm
     public function saveRelations(): void
     {
         $itemRelationship = $this->getRelationship($this->itemRelationshipName());
+        $itemIdFieldName = (new $this->itemClass)->getKeyName();
 
         if($itemRelationship instanceof BelongsToMany){
             //----------------------------------------------------
@@ -143,19 +144,19 @@ abstract class LivewireItemForm extends LivewireForm
             //----------------------------------------------------
             $arrItemIds = [];
             foreach ($this->items as $item) {
-                if (isset($item['id'])) {
-                    $itemModel = $this->itemClass::findOrFail($item['id']);
+                if (isset($item["$itemIdFieldName"])) {
+                    $itemModel = $this->itemClass::findOrFail($item["$itemIdFieldName"]);
                     $itemModel->update($item);
-                    $arrItemIds[] = $item['id'];
+                    $arrItemIds[] = $item["$itemIdFieldName"];
                 } else {
                     $item[$this->itemidField] = $this->model[$this->parentIdField];
                     $newItemModel = $this->itemClass::create($item);
-                    $arrItemIds[] = $newItemModel->id;
+                    $arrItemIds[] = $newItemModel->$itemIdFieldName;
                 }
             }
 
             $this->itemClass::where($this->itemidField, $this->model[$this->parentIdField])
-                ->whereNotIn((new $this->itemClass)->getKeyName(), $arrItemIds)
+                ->whereNotIn($itemIdFieldName, $arrItemIds)
                 ->delete();
         }
 
