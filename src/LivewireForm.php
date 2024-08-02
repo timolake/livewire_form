@@ -177,51 +177,51 @@ abstract class LivewireForm extends Component
     //----------------------------------------------------
     // helper
     //----------------------------------------------------
-    public function beforeSave()
+    public function beforeSave(): void
     {
     }
 
-    public function afterSave()
+    public function afterSave(): void
     {
     }
 
-    public function hasId()
+    public function hasId(): bool
     {
         $idfield = $this->idField;
 
         return isset($this->model->$idfield);
     }
 
-    public function getId()
+    public function getId(): int
     {
         $idfield = $this->idField;
 
         return $this->model->$idfield;
     }
 
-    public function beforeDelete()
+    public function beforeDelete(): void
     {
     }
 
     //----------------------------------------------------
     // modals
     //---------------------------------------------------
-    public function closeDeleteModal()
+    public function closeDeleteModal(): void
     {
         $this->showDeleteModal = false;
     }
 
-    public function openDeleteModal()
+    public function openDeleteModal(): void
     {
         $this->showDeleteModal = true;
     }
 
-    public function closeRestoreModal()
+    public function closeRestoreModal(): void
     {
         $this->showRestoreModal = false;
     }
 
-    public function openRestoreModal()
+    public function openRestoreModal(): void
     {
         $this->showRestoreModal = true;
     }
