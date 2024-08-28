@@ -2,6 +2,8 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v1.12 - 2024-08-28
+* form: get id field can be null (create new model)
 ## v1.11 - 2024-04-11
 * itemform: get id field for item from model
 ## v1.10 - 2024-04-08

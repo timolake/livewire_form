@@ -192,7 +192,7 @@ abstract class LivewireForm extends Component
         return isset($this->model->$idfield);
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         $idfield = $this->idField;
 
