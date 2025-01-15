@@ -157,7 +157,7 @@ abstract class LivewireForm extends Component
         return redirect(self::addParamsToUrl($this->getRedirectRoute(), $this->getRedirectParams()))->with('status', $this->redirectMessage);
     }
 
-    private static function addParamsToUrl(string $url, array $params): string
+    protected static function addParamsToUrl(string $url, array $params): string
     {
         if (empty($params)) {
             return $url;
@@ -191,7 +191,7 @@ abstract class LivewireForm extends Component
 
         return isset($this->model->$idfield);
     }
-    
+
     public function beforeDelete(): void
     {
     }

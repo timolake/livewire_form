@@ -2,6 +2,8 @@
 
 
 All notable changes to `livewire-forms` will be documented in this file.
+## v2.1.1 - 2025-01-15
+* form: make addParamsToUrl function protected
 ## v2.1 - 2024-08-28
 * form: get id field can be null (create new model)
 * ## v20 - 2024-08-2
